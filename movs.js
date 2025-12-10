@@ -1050,3 +1050,72 @@ if (!document.getElementById('special-effects-style')) {
     document.head.appendChild(style);
 }
 
+// ============================================
+// CONFIGURACIÓN DE LISTA DE REPRODUCCIÓN (PLAYLIST)
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    const bgMusic = document.getElementById('bgMusic');
+    const playBtn = document.getElementById('playMusicBtn');
+    const prevBtn = document.getElementById('prevTrackBtn');
+    const nextBtn = document.getElementById('nextTrackBtn');
+    const songTitle = document.getElementById('songTitle');
+
+    // --- AQUÍ PONES TUS CANCIONES ---
+    // Asegúrate de que los nombres sean exactos
+    const playlist = [
+        { file: 'musica/cancion1.mp4', name: '❤️' },
+        { file: 'musica/cancion2.mp4', name: '🦕' },
+        { file: 'musica/cancion3.mp4', name: '✨' },
+        { file: 'musica/cancion4.mp4', name: 'Te amo' }
+    ];
+
+    let currentTrack = 0;
+    let isPlaying = false;
+
+    // Cargar la primera canción
+    loadTrack(currentTrack);
+
+    function loadTrack(index) {
+        bgMusic.src = playlist[index].file;
+        songTitle.textContent = playlist[index].name;
+        bgMusic.volume = 0.5;
+    }
+
+    function playPauseMusic() {
+        if (isPlaying) {
+            bgMusic.pause();
+            playBtn.classList.remove('playing');
+            playBtn.innerHTML = '🎵';
+        } else {
+            bgMusic.play().then(() => {
+                playBtn.classList.add('playing');
+                playBtn.innerHTML = '💿';
+            }).catch(e => console.log("Interacción necesaria"));
+        }
+        isPlaying = !isPlaying;
+    }
+
+    // Botón Play/Pausa
+    playBtn.addEventListener('click', playPauseMusic);
+
+    // Botón Siguiente
+    nextBtn.addEventListener('click', () => {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        loadTrack(currentTrack);
+        if (isPlaying) bgMusic.play();
+    });
+
+    // Botón Anterior
+    prevBtn.addEventListener('click', () => {
+        currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+        loadTrack(currentTrack);
+        if (isPlaying) bgMusic.play();
+    });
+
+    // Cuando termina una canción, pasa a la siguiente automáticamente
+    bgMusic.addEventListener('ended', () => {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        loadTrack(currentTrack);
+        bgMusic.play();
+    });
+});
