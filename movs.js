@@ -1066,7 +1066,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { file: 'musica/cancion1.mp4', name: '❤️' },
         { file: 'musica/cancion2.mp4', name: '🦕' },
         { file: 'musica/cancion3.mp4', name: '✨' },
-        { file: 'musica/cancion4.mp4', name: 'Te amo' }
+        { file: 'musica/cancion4.mp4', name: 'Te amo' },
+        { file: 'musica/cancion3.mp4', name: 'Para ti amor' }
     ];
 
     let currentTrack = 0;
